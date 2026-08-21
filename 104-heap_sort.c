@@ -62,3 +62,4 @@ void heap_sort(int *array, size_t size)
 		max_heapify(array, size, i, 0);
 	}
 }
+/* Heap sort check */
