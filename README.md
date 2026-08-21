@@ -33,3 +33,4 @@
  - All sorting algorithms and advanced tasks implemented.
  - Fully tested and verified with Holberton standards.
  - All sorting algorithms and advanced tasks implemented.
+ - Fully tested and verified with Holberton standards.
