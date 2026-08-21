@@ -33,3 +33,4 @@ void bubble_sort(int *array, size_t size)
 			break;
 	}
 }
+/* Update Bubble sort metadata */
