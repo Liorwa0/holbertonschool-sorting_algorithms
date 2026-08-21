@@ -70,3 +70,4 @@ void merge_sort(int *array, size_t size)
 	merge_sort_recursive(array, buff, 0, size);
 	free(buff);
 }
+/* Merge sort check */
