@@ -49,3 +49,4 @@ void insertion_sort_list(listint_t **list)
 		current = temp;
 	}
 }
+/* Check insertion sort style */
