@@ -69,3 +69,4 @@ void sort_deck(deck_node_t **deck)
 		}
 	} while (swapped);
 }
+/* Deck sort check */
