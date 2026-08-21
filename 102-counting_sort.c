@@ -43,3 +43,4 @@ void counting_sort(int *array, size_t size)
 	free(output);
 	free(count);
 }
+/* Counting sort review */
