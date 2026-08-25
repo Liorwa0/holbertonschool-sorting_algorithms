@@ -1,23 +1,25 @@
 #include "sort.h"
 
 /**
- * swap_ints - Swaps two integers
- * @a: First integer
- * @b: Second integer
+ * swap_ints - Swaps two integers in an array
+ * @a: The first integer to swap
+ * @b: The second integer to swap
  */
 void swap_ints(int *a, int *b)
 {
-	int tmp = *a;
+	int tmp;
+
+	tmp = *a;
 	*a = *b;
 	*b = tmp;
 }
 
 /**
- * max_heapify - Turns array into a max heap
- * @array: The array to heapify
- * @size: Full size of the array
- * @base: Base of the heap
- * @root: Root node
+ * max_heapify - Turns a binary tree into a complete binary heap (sift-down)
+ * @array: An array of integers representing a binary tree
+ * @size: The total size of the array
+ * @base: The index of the base row of the tree
+ * @root: The root node of the binary tree
  */
 void max_heapify(int *array, size_t size, size_t base, size_t root)
 {
@@ -34,22 +36,23 @@ void max_heapify(int *array, size_t size, size_t base, size_t root)
 
 	if (large != root)
 	{
-		swap_ints(array + root, array + large);
+		swap_ints(&array[root], &array[large]);
 		print_array(array, size);
 		max_heapify(array, size, base, large);
 	}
 }
 
 /**
- * heap_sort - Sorts an array using Heap sort algorithm
- * @array: The array to sort
- * @size: Size of the array
+ * heap_sort - Sorts an array of integers in ascending order
+ *             using the Heap sort algorithm
+ * @array: An array of integers
+ * @size: The size of the array
  */
 void heap_sort(int *array, size_t size)
 {
 	int i;
 
-	if (array == NULL || size < 2)
+	if (!array || size < 2)
 		return;
 
 	for (i = (size / 2) - 1; i >= 0; i--)
@@ -57,9 +60,8 @@ void heap_sort(int *array, size_t size)
 
 	for (i = size - 1; i > 0; i--)
 	{
-		swap_ints(array, array + i);
+		swap_ints(&array[0], &array[i]);
 		print_array(array, size);
 		max_heapify(array, size, i, 0);
 	}
 }
-/* Heap sort check */
