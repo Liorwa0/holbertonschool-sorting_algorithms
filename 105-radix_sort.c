@@ -1,15 +1,19 @@
+#include <stdlib.h>
 #include "sort.h"
 
 /**
- * get_max - Gets maximum value from array
- * @array: The array
- * @size: Size of the array
- * Return: Maximum value
+ * get_max_val - Gets the maximum value in an array of integers
+ * @array: An array of integers
+ * @size: The size of the array
+ *
+ * Return: The maximum integer in the array
  */
-int get_max(int *array, int size)
+int get_max_val(int *array, size_t size)
 {
-	int max = array[0], i;
+	int max;
+	size_t i;
 
+	max = array[0];
 	for (i = 1; i < size; i++)
 	{
 		if (array[i] > max)
@@ -19,49 +23,52 @@ int get_max(int *array, int size)
 }
 
 /**
- * radix_counting_sort - Counting sort for radix sort based on sig digit
- * @array: The array to sort
- * @size: Size of the array
- * @sig: Significant digit to sort by
- * @buff: Buffer to use for sorting
+ * radix_counting_sort - Sorts the significant digits of an array in ascending
+ *                       order using the counting sort algorithm
+ * @array: An array of integers
+ * @size: The size of the array
+ * @sig: The significant digit to sort on
+ * @buff: A buffer to store the sorted array
  */
 void radix_counting_sort(int *array, size_t size, int sig, int *buff)
 {
-	int count[10] = {0}, i;
+	int count[10] = {0};
+	size_t i;
 
-	for (i = 0; i < (int)size; i++)
+	for (i = 0; i < size; i++)
 		count[(array[i] / sig) % 10] += 1;
 
 	for (i = 1; i < 10; i++)
 		count[i] += count[i - 1];
 
-	for (i = (int)size - 1; i >= 0; i--)
+	for (i = size - 1; (int)i >= 0; i--)
 	{
 		buff[count[(array[i] / sig) % 10] - 1] = array[i];
 		count[(array[i] / sig) % 10] -= 1;
 	}
 
-	for (i = 0; i < (int)size; i++)
+	for (i = 0; i < size; i++)
 		array[i] = buff[i];
 }
 
 /**
- * radix_sort - Sorts an array using Radix sort algorithm
- * @array: The array to sort
- * @size: Size of the array
+ * radix_sort - Sorts an array of integers in ascending order
+ *              using the Radix sort algorithm (LSD)
+ * @array: An array of integers
+ * @size: The size of the array
  */
 void radix_sort(int *array, size_t size)
 {
 	int max, sig, *buff;
 
-	if (array == NULL || size < 2)
+	if (!array || size < 2)
 		return;
 
+	max = get_max_val(array, size);
 	buff = malloc(sizeof(int) * size);
-	if (buff == NULL)
+	if (!buff)
 		return;
 
-	max = get_max(array, size);
 	for (sig = 1; max / sig > 0; sig *= 10)
 	{
 		radix_counting_sort(array, size, sig, buff);
@@ -70,4 +77,3 @@ void radix_sort(int *array, size_t size)
 
 	free(buff);
 }
-/* Radix sort check */
