@@ -1,68 +1,39 @@
 #include "sort.h"
 
 /**
- * swap_nodes - Swaps two nodes in a doubly linked list
- * @list: Double pointer to the head of the list
- * @n1: First node to swap
- * @n2: Second node to swap
+ * shell_sort - Sorts an array of integers in ascending order
+ *              using the Shell sort algorithm with Knuth sequence.
+ * @array: The array to be sorted.
+ * @size: The size of the array.
  */
-void swap_nodes(listint_t **list, listint_t *n1, listint_t *n2)
+void shell_sort(int *array, size_t size)
 {
-	if (n1->prev)
-		n1->prev->next = n2;
-	else
-		*list = n2;
-	if (n2->next)
-		n2->next->prev = n1;
-	n2->prev = n1->prev;
-	n1->next = n2->next;
-	n1->prev = n2;
-	n2->next = n1;
-}
+	size_t gap = 1, i, j;
+	int temp;
 
-/**
- * cocktail_sort_list - Sorts a doubly linked list using Cocktail shaker sort
- * @list: Double pointer to the head of the list
- */
-void cocktail_sort_list(listint_t **list)
-{
-	listint_t *curr;
-	int swapped = 1;
-
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
+	if (array == NULL || size < 2)
 		return;
 
-	curr = *list;
-	while (swapped)
+	/* Calculate initial gap using Knuth sequence: n+1 = n * 3 + 1 */
+	while (gap < size / 3)
+		gap = gap * 3 + 1;
+
+	/* Perform Shell sort and reduce gap */
+	while (gap > 0)
 	{
-		swapped = 0;
-		while (curr->next)
+		for (i = gap; i < size; i++)
 		{
-			if (curr->n > curr->next->n)
+			temp = array[i];
+			j = i;
+
+			while (j >= gap && array[j - gap] > temp)
 			{
-				swap_nodes(list, curr, curr->next);
-				print_list(*list);
-				swapped = 1;
+				array[j] = array[j - gap];
+				j -= gap;
 			}
-			else
-				curr = curr->next;
+			array[j] = temp;
 		}
-		if (!swapped)
-			break;
-		swapped = 0;
-		curr = curr->prev;
-		while (curr->prev)
-		{
-			if (curr->n < curr->prev->n)
-			{
-				swap_nodes(list, curr->prev, curr);
-				print_list(*list);
-				swapped = 1;
-			}
-			else
-				curr = curr->prev;
-		}
-		curr = curr->next;
+		print_array(array, size);
+		gap = (gap - 1) / 3;
 	}
-}
-/* Cocktail shaker review */
+}ocktail shaker review */
