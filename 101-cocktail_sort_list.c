@@ -1,39 +1,69 @@
 #include "sort.h"
 
 /**
- * shell_sort - Sorts an array of integers in ascending order
- *              using the Shell sort algorithm with Knuth sequence.
- * @array: The array to be sorted.
- * @size: The size of the array.
+ * swap_nodes - Swap two adjacent nodes in a doubly linked list
+ * @list: Double pointer to the head of the list
+ * @left: The first node to swap
+ * @right: The second node to swap
  */
-void shell_sort(int *array, size_t size)
+void swap_nodes(listint_t **list, listint_t *left, listint_t *right)
 {
-	size_t gap = 1, i, j;
-	int temp;
+	if (left->prev)
+		left->prev->next = right;
+	else
+		*list = right;
 
-	if (array == NULL || size < 2)
+	if (right->next)
+		right->next->prev = left;
+
+	left->next = right->next;
+	right->prev = left->prev;
+	right->next = left;
+	left->prev = right;
+}
+
+/**
+ * cocktail_sort_list - Sorts a doubly linked list using Cocktail shaker sort
+ * @list: Double pointer to the head of the list
+ */
+void cocktail_sort_list(listint_t **list)
+{
+	listint_t *curr;
+	int swapped = 1;
+
+	if (!list || !*list || !(*list)->next)
 		return;
 
-	/* Calculate initial gap using Knuth sequence: n+1 = n * 3 + 1 */
-	while (gap < size / 3)
-		gap = gap * 3 + 1;
-
-	/* Perform Shell sort and reduce gap */
-	while (gap > 0)
+	curr = *list;
+	while (swapped)
 	{
-		for (i = gap; i < size; i++)
+		swapped = 0;
+		while (curr->next)
 		{
-			temp = array[i];
-			j = i;
-
-			while (j >= gap && array[j - gap] > temp)
+			if (curr->n > curr->next->n)
 			{
-				array[j] = array[j - gap];
-				j -= gap;
+				swap_nodes(list, curr, curr->next);
+				print_list((const listint_t *)*list);
+				swapped = 1;
 			}
-			array[j] = temp;
+			else
+				curr = curr->next;
 		}
-		print_array(array, size);
-		gap = (gap - 1) / 3;
+
+		if (!swapped)
+			break;
+
+		swapped = 0;
+		while (curr->prev)
+		{
+			if (curr->n < curr->prev->n)
+			{
+				swap_nodes(list, curr->prev, curr);
+				print_list((const listint_t *)*list);
+				swapped = 1;
+			}
+			else
+				curr = curr->prev;
+		}
 	}
-}ocktail shaker review */
+}
