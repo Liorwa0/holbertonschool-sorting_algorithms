@@ -1,15 +1,14 @@
 #ifndef DECK_H
 #define DECK_H
 
-#include <stdio.h>
 #include <stdlib.h>
 
 /**
- * enum kind_e - Card suits
- * @SPADE: Spades
- * @HEART: Hearts
- * @CLUB: Clubs
- * @DIAMOND: Diamonds
+ * enum kind_e - Kinds of cards
+ * @SPADE: Spade kind (0)
+ * @HEART: Heart kind (1)
+ * @CLUB: Club kind (2)
+ * @DIAMOND: Diamond kind (3)
  */
 typedef enum kind_e
 {
@@ -21,8 +20,8 @@ typedef enum kind_e
 
 /**
  * struct card_s - Playing card
- * @value: Value of the card (Ace to King)
- * @kind: Kind of the card (Suit)
+ * @value: Value of the card (From "Ace" to "King")
+ * @kind: Kind of the card
  */
 typedef struct card_s
 {
